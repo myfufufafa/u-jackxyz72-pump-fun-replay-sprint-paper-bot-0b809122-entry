@@ -1,4 +1,9 @@
 // Flow-breakout scalper for the pump.fun replay sprint (agent-fun/replay/v2).
+// K5 variant: frozen v2 exits (TP1 +20% half / runner +60% / SL -12% / crash
+// -10% / timeout 300) + tighter entry (net >=2 SOL, >=8 buyers). K4 showed
+// widening exits on mature coins loses heavily (-0.475 vs -0.240), so the
+// only remaining lever for B is buying fewer, better coins and cutting the
+// fee drag (103 round trips vs guardrail minimum 20).
 //
 // Idea: on a 24-hour window the launches never stop, so this bot waits for
 // maturity (100-2400 slots after creation) and only buys curves whose last 40
@@ -28,8 +33,8 @@ const SELL_SLIPPAGE_BPS = 10_000; // Exits always execute.
 const MIN_AGE_SLOTS = 100; // Only mature curves.
 const MAX_AGE_SLOTS = 2400; // About 16 minutes after creation.
 const FLOW_WINDOW_SLOTS = 40;
-const MIN_NET_SOL_LAMPORTS = 1_000_000_000n; // 1 SOL net buy inflow in the window.
-const MIN_BUYERS = 5;
+const MIN_NET_SOL_LAMPORTS = 2_000_000_000n; // K5: 2 SOL net buy inflow in the window.
+const MIN_BUYERS = 8; // K5: only broadly-bought curves. Exits stay frozen v2 (fast exits are load-bearing for mature coins — K4 proved widening them loses -0.24).
 const MAX_BUYER_SHARE_PCT = 50; // Largest single buyer at most 50% of buy SOL.
 const MIN_REAL_LAMPORTS = 2_000_000_000n; // 2 SOL of real reserves.
 const MAX_REAL_LAMPORTS = 60_000_000_000n; // 60 SOL of real reserves.
